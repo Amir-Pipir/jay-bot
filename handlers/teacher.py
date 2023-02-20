@@ -11,10 +11,11 @@ class Teacher(StatesGroup):
 #@dp.message_handler(commands=['teacher'])
 async def teacher_start(message: types.Message):
     x=await sqlite_db.check_for_admin(message.from_user.id)
-    if  x == "teacher":
-        await message.answer('Что будем делать?',reply_markup=teacher_kb)
-    else:
+    if x != "teacher":
         await message.answer('Ты не учитель!')
+    else:
+        await message.answer('Что будем делать?',reply_markup=teacher_kb)
+
 
 #@dp.message_handler(Text('Редактировать расписание'))
 async def redact_timetable(message: types.Message):

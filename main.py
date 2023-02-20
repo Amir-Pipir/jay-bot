@@ -6,10 +6,12 @@ from create_bot import dp
 async def on_startup(_):
     print("Бот вышел в онлайн")
 
-from handlers import admin, other
+from handlers import admin, teacher, other
 
 admin.register_handlers_other(dp)
+teacher.register_handlers_other(dp)
 other.register_handlers_other(dp)
+
 
 
 
