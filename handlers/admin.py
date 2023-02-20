@@ -22,7 +22,7 @@ async def admin_start(message: types.Message):
 # @dp.message_handler(Text('Редактировать ДЗ'))
 async def insert_hw(message: types.Message):
     x = await sqlite_db.check_for_admin(message.from_user.id)
-    if x == 'admin':
+    if x == 'admin' or x == 'teacher':
         await message.answer('Какое ДЗ?')
         await HW.message.set()
     else:
