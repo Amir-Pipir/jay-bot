@@ -4,8 +4,10 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from data_base import sqlite_db
 from keyboards import kb_other
 from aiogram.dispatcher.filters import Text
+from datetime import datetime
 
 
+days=["понедельник","вторник","среда","четверг","пятница","суббота","воскресенье","понедельник"]
 
 class Form(StatesGroup):
     user_class= State()
@@ -41,6 +43,13 @@ async def check_timetable(message : types.Message):
 
 async def check_day(message: types.Message, state: FSMContext):
     Day = message.text.lower()
+    global days
+    if Day == "завтра":
+        date = datetime.today()
+        today = date.weekday()
+        Day = days[today+1]
+
+
     await sqlite_db.sql_check_tb(message, Day, message.from_user.id)
     await state.finish()
 
