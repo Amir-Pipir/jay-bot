@@ -85,3 +85,7 @@ async def sql_check_hw(message, sub, id):
     else:
         await message.answer('Ошибка:\nЛибо ты неправильно написал предмет,либо админ не добавил домашку по этому предмету')
 
+async def change_role(user_id,x):
+    cursor.execute(f"UPDATE public.users SET role='{x}' WHERE id='{user_id}'")
+    conn.commit()
+

@@ -5,6 +5,8 @@ from data_base import sqlite_db
 from keyboards import kb_other
 from aiogram.dispatcher.filters import Text
 from datetime import datetime
+from create_bot import bot
+import random
 
 
 days=["понедельник","вторник","среда","четверг","пятница","суббота","воскресенье","понедельник"]
@@ -17,6 +19,9 @@ class Check_time(StatesGroup):
 
 class Check_hw(StatesGroup):
     sub = State()
+
+class Chr(StatesGroup):
+    message = State()
 
 #@dp.message_handler(commands=['start','help'])
 async def start_message(message: types.Message):
@@ -63,8 +68,26 @@ async def check_sub(message: types.Message, state: FSMContext):
     await sqlite_db.sql_check_hw(message,sub,message.from_user.id)
     await state.finish()
 
+#@dp.message_handler(commands=[''])
+password = ''
+async def change_role1(message: types.Message):
+    global password
+    chars = '+-/*!&$#?=@<>abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+    for i in range(8):
+        password += random.choice(chars)
+    await bot.send_message(message.from_user.id, password)
+    await message.answer('Пароль?')
+    await Chr.message.set()
 
 
+async def change_role2(message: types.Message, state:FSMContext):
+    x = message.text.split(',')
+    if x[0] == password :
+        await sqlite_db.change_role(message.from_user.id,x[1])
+        await message.answer('Все!')
+    else:
+        await message.answer('Неправильный пароль!')
+    await state.finish()
 
 
 
@@ -81,4 +104,6 @@ def register_handlers_other(dp : Dispatcher):
     dp.register_message_handler(check_day, state=Check_time.Day)
     dp.register_message_handler(check_hw, Text('Посмотреть ДЗ'), state=None)
     dp.register_message_handler(check_sub, state=Check_hw.sub)
+    dp.register_message_handler(change_role1, commands=['change_role'])
+    dp.register_message_handler(change_role2, state=Chr.message)
     dp.register_message_handler(echo)
