@@ -29,20 +29,23 @@ async def redact_timetable(message: types.Message):
 
 #@dp.message_handler(state=Teacher.time_table)
 async def redact_timetable1(message: types.Message, state: FSMContext):
-    x = message.text.split()
-    Day = x[0].lower()
-    l_1=x[1]
-    l_2=x[2]
-    l_3=x[3]
-    l_4=x[4]
-    l_5=x[5]
-    l_6=x[6]
-    l_7=x[7]
-    user_class=x[8]
-    await sqlite_db.sql_time_table(Day=Day,l_1=l_1,l_2=l_2,l_3=l_3,l_4=l_4,l_5=l_5,l_6=l_6,l_7=l_7,user_class=user_class)
-    await state.finish()
-    await message.answer('Готово!')
-
+    try:
+        x = message.text.split()
+        Day = x[0].lower()
+        l_1=x[1]
+        l_2=x[2]
+        l_3=x[3]
+        l_4=x[4]
+        l_5=x[5]
+        l_6=x[6]
+        l_7=x[7]
+        user_class=x[8]
+        await sqlite_db.sql_time_table(Day=Day,l_1=l_1,l_2=l_2,l_3=l_3,l_4=l_4,l_5=l_5,l_6=l_6,l_7=l_7,user_class=user_class)
+        await state.finish()
+        await message.answer('Готово!')
+    except:
+        await message.answer('Ошибка!Попробуйте еще раз!')
+        await state.finish()
 def register_handlers_other(dp : Dispatcher):
     dp.register_message_handler(teacher_start,commands=['teacher'])
     dp.register_message_handler(redact_timetable, Text('Редактировать расписание'))

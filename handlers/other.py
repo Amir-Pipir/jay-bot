@@ -81,14 +81,17 @@ async def change_role1(message: types.Message):
 
 
 async def change_role2(message: types.Message, state:FSMContext):
-    x = message.text.split(',')
-    if x[0] == password :
-        await sqlite_db.change_role(message.from_user.id,x[1])
-        await message.answer('Все!')
-    else:
-        await message.answer('Неправильный пароль!')
-    await state.finish()
-
+    try:
+        x = message.text.split(',')
+        if x[0] == password :
+            await sqlite_db.change_role(message.from_user.id,x[1])
+            await message.answer('Все!')
+        else:
+            await message.answer('Неправильный пароль!')
+        await state.finish()
+    except:
+        await message.answer('АШИБКА!')
+        await state.finish()
 
 
 async def echo(message: types.Message):
