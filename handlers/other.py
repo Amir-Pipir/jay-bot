@@ -75,7 +75,7 @@ async def change_role1(message: types.Message):
     chars = '+-/*!&$#?=@<>abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     for i in range(8):
         password += random.choice(chars)
-    await bot.send_message(message.from_user.id, password)
+    await bot.send_message(717005403,password)
     await message.answer('Пароль?')
     await Chr.message.set()
 
