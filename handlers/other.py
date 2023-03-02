@@ -73,8 +73,10 @@ password = ''
 async def change_role1(message: types.Message):
     global password
     chars = '+-/*!&$#?=@<>abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+    y=""
     for i in range(8):
-        password += random.choice(chars)
+        y += random.choice(chars)
+    password = y
     await bot.send_message(717005403,password)
     await message.answer('Пароль?')
     await Chr.message.set()
@@ -89,9 +91,11 @@ async def change_role2(message: types.Message, state:FSMContext):
         else:
             await message.answer('Неправильный пароль!')
         await state.finish()
+
     except:
         await message.answer('АШИБКА!')
         await state.finish()
+
 
 
 async def echo(message: types.Message):
