@@ -11,6 +11,16 @@ import random
 
 days=["понедельник","вторник","среда","четверг","пятница","суббота","воскресенье","понедельник"]
 
+async def stickers(message: types.Message):
+    x = ["CAACAgIAAxkBAAEE46Zil3Krruhlf5gNdYciEBFXxuiWSgACKxIAAnfgkEg4MgcsSOlQeyQE",
+         "CAACAgIAAxkBAAEF3pJjJvLBd0z9H-mIm7REsLVDg-50sQACjh4AAsafGEmgupL6HGiFZCkE",
+         "CAACAgIAAxkBAAEF3pRjJvLKqUVP-MBcRLsEGTRQCLFiQwAC4BMAAre5sEk3HSpD8MxmpikE",
+         "CAACAgIAAxkBAAEF3pZjJvLebb3OLnoeINsTaaAiJ5Oc9QAC5xUAAphMyEteb5DLrghHRSkE",
+         "CAACAgIAAxkBAAEF3phjJvLrWV80qjHIuLt-n5vEd-NcvwACKRUAAl-3iUgrFJ239Xg2MikE",
+         "CAACAgIAAxkBAAEF3ppjJvMQw3hgrFa6ms-tL-ADfcU2KQAC8hUAAqkOiEiDYR42Egu1LSkE"]
+    await bot.send_sticker(chat_id=message.from_user.id,sticker=random.choice(x))
+
+
 class Form(StatesGroup):
     user_class= State()
 
@@ -38,6 +48,7 @@ async def start(message: types.Message, state: FSMContext):
     await sqlite_db.sql_start(message,ID=user_id,username=user_name,user_class=user_class,role="user")
     await state.finish()
     await message.answer(f"Отлично теперь я знаю,что ты учишься в {user_class} классе!")
+    await stickers(message)
     await message.answer('Что теперь будем делать?', reply_markup=kb_other)
 
 
@@ -57,6 +68,7 @@ async def check_day(message: types.Message, state: FSMContext):
 
     await sqlite_db.sql_check_tb(message, Day, message.from_user.id)
     await state.finish()
+    await stickers(message)
 
 #@dp.message_handler(Text('Посмотреть ДЗ'))
 async def check_hw(message: types.Message):
@@ -65,8 +77,15 @@ async def check_hw(message: types.Message):
 
 async def check_sub(message: types.Message, state: FSMContext):
     sub = message.text
-    await sqlite_db.sql_check_hw(message,sub,message.from_user.id)
+    if sub.lower() == 'завтра':
+        date = datetime.today()
+        today = date.weekday()
+        Day = days[today + 1]
+        await sqlite_db.hw_tomorrow(message,message.from_user.id,Day)
+    else:
+        await sqlite_db.sql_check_hw(message,sub,message.from_user.id)
     await state.finish()
+    await stickers(message)
 
 #@dp.message_handler(commands=[''])
 password = ''

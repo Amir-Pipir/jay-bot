@@ -89,3 +89,21 @@ async def change_role(user_id,x):
     cursor.execute(f"UPDATE public.users SET role='{x}' WHERE id='{user_id}'")
     conn.commit()
 
+
+async def hw_tomorrow(message,id,Day):
+    cursor.execute(f"SELECT * FROM public.users WHERE ID='{id}'")
+    pin2 = cursor.fetchone()
+    User_Class = pin2[2]
+    cursor.execute(f"SELECT l_1,l_2,l_3,l_4,l_5,l_6,l_7 FROM public.time_table WHERE Day='{Day}' AND user_class='{User_Class}'")
+    pin3 = cursor.fetchone()
+    pin1 = list(set(pin3))
+    y = 0
+    for i in pin1:
+        cursor.execute(f"SELECT homework FROM public.home_work WHERE user_class='{User_Class}' and subject='{i}'")
+        x = cursor.fetchone()
+        if x != None:
+            y += 1
+            await message.answer(f"{i}\n{x[0]}")
+    if y == 0:
+        await message.answer("Ничего не задали)")
+
