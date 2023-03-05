@@ -76,8 +76,8 @@ async def check_hw(message: types.Message):
     await Check_hw.sub.set()
 
 async def check_sub(message: types.Message, state: FSMContext):
-    sub = message.text
-    if sub.lower() == 'завтра':
+    sub = message.text.lower()
+    if sub == 'завтра':
         date = datetime.today()
         today = date.weekday()
         Day = days[today + 1]

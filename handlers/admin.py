@@ -33,7 +33,7 @@ async def insert_hw(message: types.Message):
 async def hw_message(message: types.Message, state: FSMContext):
     try:
         x = message.text.split(':')
-        sub = x[0]
+        sub = x[0].lower()
         hw = x[1]
         Class = await sqlite_db.check_class(message.from_user.id)
 
