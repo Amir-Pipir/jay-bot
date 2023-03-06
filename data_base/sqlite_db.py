@@ -102,7 +102,7 @@ async def hw_tomorrow(message,id,Day):
     for i in pin1:
         cursor.execute(f"SELECT homework FROM public.home_work WHERE user_class='{User_Class}' and subject='{i}'")
         x = cursor.fetchone()
-        if x != None:
+        if x != None or x != '-':
             y += 1
             await message.answer(f"{i}\n{x[0]}")
     if y == 0:
