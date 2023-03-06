@@ -65,6 +65,11 @@ async def check_day(message: types.Message, state: FSMContext):
         today = date.weekday()
         Day = days[today+1]
 
+    if Day == "сегодня":
+        date = datetime.today()
+        today = date.weekday()
+        Day = days[today]
+
 
     await sqlite_db.sql_check_tb(message, Day, message.from_user.id)
     await state.finish()
