@@ -18,6 +18,7 @@ async def sql_start(message,ID:str,username:str,user_class:str,role:str):
         conn.commit()
     else:
         x = pin2[2].replace(" ", "")
+
         if x != user_class:
             cursor.execute(f"UPDATE public.users SET user_class='{user_class}' WHERE ID='{ID}'")
             await message.answer('Класс обновлен!')
