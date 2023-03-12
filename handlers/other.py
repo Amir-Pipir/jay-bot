@@ -41,16 +41,19 @@ async def start_message(message: types.Message):
 
 #@dp.message_handler(state=Form.a)
 async def start(message: types.Message, state: FSMContext):
-    user_class = message.text
-    user_id=message.from_user.id
+    try:
+        user_class = message.text
+        user_id=message.from_user.id
 
-    user_name=message.from_user.username
-    await sqlite_db.sql_start(message,ID=user_id,username=user_name,user_class=user_class,role="user")
-    await state.finish()
-    await message.answer(f"Отлично теперь я знаю,что ты учишься в {user_class} классе!")
-    await stickers(message)
-    await message.answer('Что теперь будем делать?', reply_markup=kb_other)
-
+        user_name=message.from_user.username
+        await sqlite_db.sql_start(message,ID=user_id,username=user_name,user_class=user_class,role="user")
+        await state.finish()
+        await message.answer(f"Отлично теперь я знаю,что ты учишься в {user_class} классе!")
+        await stickers(message)
+        await message.answer('Что теперь будем делать?', reply_markup=kb_other)
+    except:
+        await message.answer('Ошибка!(Количество символов в названии класса не должно превышать 7 символов)')
+        await  state.finish()
 
 #@dp.message_handler(Text('Посмотреть расписание'))
 async def check_timetable(message : types.Message):
