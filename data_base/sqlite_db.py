@@ -104,8 +104,9 @@ async def hw_tomorrow(message,id,Day):
         cursor.execute(f"SELECT homework FROM public.home_work WHERE user_class='{User_Class}' and subject='{i.lower()}'")
         x = cursor.fetchone()
         if x != None:
-            y += 1
-            await message.answer(f"{i}\n{x[0]}")
+            if x!= '-':
+                y += 1
+                await message.answer(f"{i}\n{x[0]}")
     if y == 0:
         await message.answer("Ничего не задали)")
 
