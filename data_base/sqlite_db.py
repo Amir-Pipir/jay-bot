@@ -91,7 +91,7 @@ async def change_role(user_id,x):
     conn.commit()
 
 
-async def hw_tomorrow(message,id,Day):
+async def hw_tomorrow(message,id,Day,sub):
     cursor.execute(f"SELECT * FROM public.users WHERE ID='{id}'")
     pin2 = cursor.fetchone()
     User_Class = pin2[2]
@@ -99,7 +99,10 @@ async def hw_tomorrow(message,id,Day):
     pin3 = cursor.fetchone()
     pin1 = list(set(pin3))
     y = 0
-    await message.answer(f'Завтра {Day}')
+    if sub == 'завтра':
+        await message.answer(f'Завтра {Day}')
+    if sub == 'сегодня':
+        await message.answer(f'Сегодня {Day}')
     for i in pin1:
         cursor.execute(f"SELECT homework FROM public.home_work WHERE user_class='{User_Class}' and subject='{i.lower()}'")
         x = cursor.fetchone()
