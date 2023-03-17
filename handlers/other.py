@@ -86,7 +86,7 @@ async def check_sub(message: types.Message, state: FSMContext):
         today = date.weekday()
         Day = days[today + 1]
         await sqlite_db.hw_tomorrow(message, message.from_user.id, Day,sub)
-    if sub == 'сегодня':
+    elif sub == 'сегодня':
         date = datetime.today()
         today = date.weekday()
         Day = days[today]
