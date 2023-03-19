@@ -106,7 +106,7 @@ async def change_role1(message: types.Message):
     for i in range(8):
         y += random.choice(chars)
     password = y
-    await bot.send_message(os.getenv('ADMIN_CHAT_ID'),password)
+    await bot.send_message(717005403,password)
     await message.answer('Пароль?')
     await Chr.message.set()
 
