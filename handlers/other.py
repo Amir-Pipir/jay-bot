@@ -7,7 +7,7 @@ from aiogram.dispatcher.filters import Text
 from datetime import datetime
 from create_bot import bot
 import random
-import os
+
 
 
 days=["понедельник","вторник","среда","четверг","пятница","суббота","воскресенье","понедельник"]
