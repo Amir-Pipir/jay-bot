@@ -7,6 +7,7 @@ from aiogram.dispatcher.filters import Text
 from datetime import datetime
 from create_bot import bot
 import random
+import os
 
 
 days=["понедельник","вторник","среда","четверг","пятница","суббота","воскресенье","понедельник"]
@@ -105,7 +106,7 @@ async def change_role1(message: types.Message):
     for i in range(8):
         y += random.choice(chars)
     password = y
-    await bot.send_message(717005403,password)
+    await bot.send_message(os.getenv('ADMIN_CHAT_ID'),password)
     await message.answer('Пароль?')
     await Chr.message.set()
 

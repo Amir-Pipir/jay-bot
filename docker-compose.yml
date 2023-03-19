@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+    bot:
+        build: .
+        command: sh -c"python -m main.py"
+        env_file:
+            - ./.env
+        restart: always
+volumes:
+    pgdata:
