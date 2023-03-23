@@ -3,7 +3,3 @@ services:
   bot:
     build: .
     image: amirkal/jay-bot:latest
-    stop_signal: SIGINT
-    restart: unless-stopped
-    volumes:
-        - ".env:/app/.env"
