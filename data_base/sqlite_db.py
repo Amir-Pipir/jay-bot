@@ -1,7 +1,10 @@
+import os
+
 import psycopg2
+from create_bot import DB_URI
 
 
-DB_URI="postgres://bxilbbud:SsuWC0gTuxiD4tg3GtnsVFL__Jt1BhMk@manny.db.elephantsql.com/bxilbbud"
+
 
 
 conn = psycopg2.connect(DB_URI,sslmode="require")
