@@ -1,0 +1,7 @@
+version: latest
+services:
+  bot:
+    build: .
+    image: amirkal/jay-bot:latest
+    env_file:
+      - ./.env
